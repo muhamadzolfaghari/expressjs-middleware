@@ -1,9 +1,10 @@
 import * as express from "express";
+import * as cors from "cors";
 
 const app = express();
 
 function defineConfig() {
-
+  app.use(cors());
 }
 
 function startServer() {
