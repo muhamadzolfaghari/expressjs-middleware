@@ -5,7 +5,8 @@ export default class BaseRoute {
   getRouter() {
     const controller = new BaseController();
     const router = express.Router();
-    router.get('/show', controller.show)
+    router.get("/", controller.index);
+    router.get("/login", controller.login);
     return router;
   }
 }

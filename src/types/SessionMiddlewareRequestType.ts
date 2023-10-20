@@ -1,5 +1,6 @@
 import { Request } from "express";
+import IUser from "../interfaces/IUser";
 
-export type SessionMiddlewareRequestType = Request & {
-  session: { user: { id: string } };
+export type SessionMiddlewareRequestType = Request<Omit<IUser, "id">> & {
+  session: { user: Omit<IUser, "password">; id: string };
 };
