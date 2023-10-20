@@ -1,5 +1,5 @@
 declare module "perfect-express-sanitizer" {
-  import { NextFunction, Request, Response } from "express";
+  import express from "express";
   type SecurityLevelType = 1 | 2 | 3 | 4 | 5;
 
   interface ISanitizerConfig {
@@ -10,9 +10,5 @@ declare module "perfect-express-sanitizer" {
     noSqlLevel: SecurityLevelType;
   }
 
-  // @ts-ignore
-  function clean(config: ISanitizerConfig) {
-    // @ts-ignore
-    return function (req: Request, res: Response, next: NextFunction) {};
-  }
+  function clean(config: ISanitizerConfig): express.RequestHandler;
 }
