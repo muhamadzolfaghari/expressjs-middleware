@@ -1,13 +1,15 @@
 import * as express from "express";
 import * as cors from "cors";
+import sessionMiddleware from "./middlewares/sessionMiddleware";
+import BaseRoute from "./routes/BaseRoute";
+import * as cookieParser from "cookie-parser";
 
 const app = express();
 
-
-
 function defineConfig() {
   app.use(cors());
-  app.use()
+  app.use(cookieParser());
+  app.use(sessionMiddleware);
 }
 
 function startServer() {
@@ -16,8 +18,14 @@ function startServer() {
   });
 }
 
+function defineRoutes() {
+  const baseRoute = new BaseRoute();
+  app.use("/", baseRoute.getRouter());
+}
+
 function main() {
   defineConfig();
+  defineRoutes();
   startServer();
 }
 
