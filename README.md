@@ -11,4 +11,5 @@ The first point for this project is `src/main.ts`.
 
 This project is used `typescript` and `express` and `nodemon` to reload immediately after any changes
 
-## The `.env` file is provided a config to project such as port and security config for session management.
+## Configurations
+The `.env` file is provided a config to project such as port and security config for session management.
