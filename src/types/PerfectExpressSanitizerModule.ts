@@ -6,8 +6,8 @@ declare module "perfect-express-sanitizer" {
     xss: boolean;
     noSql: boolean;
     sql: boolean;
-    sqlLevel: SecurityLevelType;
-    noSqlLevel: SecurityLevelType;
+    sqlLevel?: SecurityLevelType;
+    noSqlLevel?: SecurityLevelType;
   }
 
   function clean(config: ISanitizerConfig): express.RequestHandler;
