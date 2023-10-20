@@ -28,9 +28,10 @@ function findUser(
 
   for (const user of users) {
     const [id, username, rawPassword] = user.split("\t");
+
     if (
       username === body.username &&
-      bcrypt.compareSync(rawPassword, body.password)
+      bcrypt.compareSync(body.password, rawPassword)
     ) {
       return { username, id };
     }
@@ -60,8 +61,6 @@ export default function authenticationMiddleware(
 
   const validate = ajv.compile(validationSchema);
   const valid = validate(req.body);
-
-  console.log(req.body);
 
   if (!valid) {
     return next("validation failed");
