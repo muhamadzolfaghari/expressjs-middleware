@@ -12,7 +12,7 @@ export default class BaseController {
     res.send(`
     <form action="/login" method="POST">
       <input name="username" />
-      <input name="password" />
+      <input name="password" type="password" />
       <button>Login</button>
     <form />
     `);

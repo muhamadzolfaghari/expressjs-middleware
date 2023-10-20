@@ -30,7 +30,9 @@ function writeUses(users: Omit<IUser, "id">[]) {
 }
 
 export default function createUsers() {
-  const users: Omit<IUser, "id">[] = [{ username: "user", password: "123456" }];
+  const users: Omit<IUser, "id">[] = [
+    { username: "administrative", password: "123456" },
+  ];
 
   writeUses(users);
 }
