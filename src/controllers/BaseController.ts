@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 
 export default class BaseController {
-  show(req: Request, res: Response) {
-    res.send({ data: {} });
+  login(req: Request, res: Response) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
   }
 }

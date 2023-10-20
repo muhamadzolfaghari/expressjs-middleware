@@ -1,17 +1,19 @@
 import express from "express";
 import cors from "cors";
-
 import BaseRoute from "./routes/BaseRoute";
 
 import authenticationMiddleware from "./middlewares/authenticationMiddleware";
 import expressSessionMiddleware from "./middlewares/expressSessionMiddleware";
 import sanitizationMiddleware from "./middlewares/sanitizationMiddleware";
 
+import bodyParser from "body-parser";
+
 const app = express();
 
 function defineConfig() {
   // cors provides an access-allow-origin through unfamiliar or foreign origin
   app.use(cors());
+  app.use(bodyParser.json());
 
   app.use(sanitizationMiddleware);
 
