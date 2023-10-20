@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
-import authenticationMiddleware from "./middlewares/authenticationMiddleware";
+
 import BaseRoute from "./routes/BaseRoute";
+
+import authenticationMiddleware from "./middlewares/authenticationMiddleware";
 import expressSessionMiddleware from "./middlewares/expressSessionMiddleware";
 import sanitizationMiddleware from "./middlewares/sanitizationMiddleware";
 
