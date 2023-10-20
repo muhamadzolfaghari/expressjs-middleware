@@ -4,7 +4,7 @@ import { HomeRequestType } from "../types/HomeRequestType";
 export default class BaseController {
   index(req: HomeRequestType, res: Response) {
     res.send(`
-        <div>Welcome ${req.session.user.username}</div>
+          <div>Welcome ${req.session.user.username}</div>
     `);
   }
 

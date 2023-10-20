@@ -49,7 +49,7 @@ export default function authenticationMiddleware(
     return next();
   }
 
-  console.log(req.path, req.method);
+  // console.log(req.path, req.method);
 
   if (req.method === "GET" && req.path !== "/login") {
     return res.redirect("/login");
@@ -68,12 +68,10 @@ export default function authenticationMiddleware(
 
   const user = findUser(req.body);
 
-  if (user) {
-    req.session.user = user;
-    return next("/");
+  if (!user) {
+    return next("authentication failed");
   }
 
-  next("authentication failed");
+  req.session.user = user;
+  res.redirect("/");
 }
-
-//
