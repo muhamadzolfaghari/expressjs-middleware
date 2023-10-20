@@ -58,16 +58,16 @@ export default function authenticationMiddleware(
     return next();
   }
 
-  console.log(req.query);
-
   const validate = ajv.compile(validationSchema);
-  const valid = validate(req.query);
+  const valid = validate(req.body);
+
+  console.log(req.body);
 
   if (!valid) {
     return next("validation failed");
   }
 
-  const user = findUser(req.query);
+  const user = findUser(req.body);
 
   if (user) {
     req.session.user = user;
