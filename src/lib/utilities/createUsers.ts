@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import IUser from "../../interfaces/IUser";
 import * as fs from "fs";
 import * as path from "path";
+import { USERS_FILE_PATH } from "../users.const";
 
 /**
  * A repeating number in `bcrypt` hashing progress.
@@ -44,7 +45,7 @@ function writeUses(users: Omit<IUser, "id">[]) {
 
   // The existed `user.tsv` file is removed from the data folder due to appending safety user in the following.
   if (fs.existsSync(USERS_FILE_PATH)) {
-    fs.unwatchFile(USERS_FILE_PATH);
+    fs.unlinkSync(USERS_FILE_PATH);
   }
 
   for (const user of users) {
