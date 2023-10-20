@@ -1,15 +1,19 @@
-import * as express from "express";
-import * as cors from "cors";
-import sessionMiddleware from "./middlewares/sessionMiddleware";
+import express from "express";
+import cors from "cors";
+import authenticationMiddleware from "./middlewares/authenticationMiddleware";
 import BaseRoute from "./routes/BaseRoute";
-import * as cookieParser from "cookie-parser";
+import expressSessionMiddleware from "./middlewares/expressSessionMiddleware";
 
 const app = express();
 
 function defineConfig() {
+  // cors provides an access-allow-origin through unfamiliar or foreign origin
   app.use(cors());
-  app.use(cookieParser());
-  app.use(sessionMiddleware);
+
+  // cookie parser is used to parse the current client cookies as
+  // a parameter in request.
+  app.use(expressSessionMiddleware);
+  app.use(authenticationMiddleware);
 }
 
 function startServer() {
