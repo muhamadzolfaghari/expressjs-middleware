@@ -3,8 +3,11 @@ import * as cors from "cors";
 
 const app = express();
 
+
+
 function defineConfig() {
   app.use(cors());
+  app.use()
 }
 
 function startServer() {
