@@ -7,13 +7,14 @@ import expressSessionMiddleware from "./middlewares/expressSessionMiddleware";
 import sanitizationMiddleware from "./middlewares/sanitizationMiddleware";
 
 import bodyParser from "body-parser";
+import createUsers from "./lib/utilities/createUsers";
 
 const app = express();
 
 function defineConfig() {
   // cors provides an access-allow-origin through unfamiliar or foreign origin
   app.use(cors());
-  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use(sanitizationMiddleware);
 
@@ -35,6 +36,7 @@ function defineRoutes() {
 }
 
 function main() {
+  createUsers();
   defineConfig();
   defineRoutes();
   startServer();

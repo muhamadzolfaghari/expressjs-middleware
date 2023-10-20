@@ -1,10 +1,13 @@
 import { NextFunction, Response } from "express";
 import { SessionMiddlewareRequestType } from "../types/SessionMiddlewareRequestType";
 import Ajv from "ajv";
+import IUser from "../interfaces/IUser";
+import * as fs from "fs";
+import bcrypt from "bcrypt";
 
 const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
 
-const isAuthentication = (req: SessionMiddlewareRequestType) =>
+const isAuthenticated = (req: SessionMiddlewareRequestType) =>
   !!req.session.user;
 
 const validationSchema = {
@@ -17,6 +20,23 @@ const validationSchema = {
   additionalProperties: false,
 };
 
+function findUser(
+  body: Omit<IUser, "id">,
+): Omit<IUser, "password"> | undefined {
+  const content = fs.readFileSync("data/users.tsv", "utf-8");
+  const users = content.trim().split("\n");
+
+  for (const user of users) {
+    const [id, username, rawPassword] = user.split("\t");
+    if (
+      username === body.username &&
+      bcrypt.compareSync(rawPassword, body.password)
+    ) {
+      return { username, id };
+    }
+  }
+}
+
 export default function authenticationMiddleware(
   req: SessionMiddlewareRequestType,
   res: Response,
@@ -24,24 +44,37 @@ export default function authenticationMiddleware(
 ) {
   // Get cookies from requested route.
 
-  if (isAuthentication(req)) {
+  if (isAuthenticated(req)) {
     return next();
   }
 
+  console.log(req.path, req.method);
 
-  const validate = ajv.compile(validationSchema);
-  const valid = validate(req.body);
-
-  if (!valid) {
-    next(new Error("authentication failed"));
+  if (req.method === "GET" && req.path !== "/login") {
+    return res.redirect("/login");
   }
 
-  next();
+  if (req.method === "GET" && req.path === "/login") {
+    return next();
+  }
 
-  // req.session.user = { id: generateUserId() };
+  console.log(req.query);
 
-  next();
+  const validate = ajv.compile(validationSchema);
+  const valid = validate(req.query);
+
+  if (!valid) {
+    return next("validation failed");
+  }
+
+  const user = findUser(req.query);
+
+  if (user) {
+    req.session.user = user;
+    return next("/");
+  }
+
+  next("authentication failed");
 }
 
 //
-
