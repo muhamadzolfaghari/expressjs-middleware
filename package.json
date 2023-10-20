@@ -21,6 +21,7 @@
     "perfect-express-sanitizer": "^1.0.13"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.1",
     "@types/cors": "^2.8.15",
     "@types/express": "^4.17.20",
     "@types/express-session": "^1.17.9",
